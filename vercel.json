@@ -1,0 +1,19 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "projectSettings": {
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "outputDirectory": ".next"
+  },
+  "env": {
+    "STRIPE_PUBLISHABLE_KEY": {
+      "description": "Stripe publishable key for payments"
+    },
+    "NEXT_PUBLIC_TICKETWATCH_API": {
+      "description": "TicketWatch API endpoint"
+    }
+  }
+}
