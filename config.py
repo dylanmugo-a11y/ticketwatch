@@ -15,7 +15,7 @@ LOGS_DIR.mkdir(exist_ok=True)
 DB_PATH = DATA_DIR / "ticketwatch.db"
 
 # Ticketmaster API
-TM_API_KEY = os.getenv("TICKETMASTER_API_KEY", "")  # You'll set this
+TM_API_KEY = os.getenv("TICKETMASTER_API_KEY", "cQvA7GxtDil8OZsDICk9Vm0I0n5iJPtN")
 TM_BASE_URL = "https://app.ticketmaster.com/discovery/v2"
 TM_COUNTRY_CODE = "IE"
 TM_CHECK_TIMEOUT = 10  # seconds
@@ -34,8 +34,8 @@ PREMIUM_TIER_PRICE_EUR = 4.99  # Monthly subscription
 ALERT_BATCH_SIZE = 5  # Max alerts per batch send
 ALERT_COOLDOWN_MINUTES = 60  # Don't spam same user
 
-# Demo/Testing mode
-DEMO_MODE = not bool(TM_API_KEY)  # Use mock data if no real API key
+# Demo/Testing mode (auto-detect: True if no API key set)
+DEMO_MODE = not bool(TM_API_KEY) or TM_API_KEY == ""
 
 # Logging
 LOG_LEVEL = "INFO"
