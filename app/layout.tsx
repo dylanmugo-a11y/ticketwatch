@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import BackgroundBlobs from './components/BackgroundBlobs';
 
 export const metadata: Metadata = {
   title: 'TicketWatch - Never Miss a Sold-Out Gig in Ireland',
@@ -27,7 +30,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-[Inter]">
+        <BackgroundBlobs />
+        <Navbar />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
