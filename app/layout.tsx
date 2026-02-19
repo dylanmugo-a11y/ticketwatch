@@ -3,6 +3,7 @@ import './globals.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BackgroundBlobs from './components/BackgroundBlobs';
+import PageTransition from './components/animations/PageTransition';
 
 export const metadata: Metadata = {
   title: 'TicketWatch - Never Miss a Sold-Out Gig in Ireland',
@@ -39,7 +40,9 @@ export default function RootLayout({
       <body className="font-[Inter]">
         <BackgroundBlobs />
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
       </body>
     </html>

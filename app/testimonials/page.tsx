@@ -1,5 +1,12 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import GlassCard from '../components/GlassCard';
 import { WHATSAPP_LINKS } from '@/lib/config';
+import ScrollReveal from '../components/animations/ScrollReveal';
+import StaggerChildren, { StaggerItem } from '../components/animations/StaggerChildren';
+import TextReveal, { CountUp } from '../components/animations/TextReveal';
+import MagneticButton from '../components/animations/MagneticButton';
 
 const testimonials = [
   {
@@ -40,17 +47,26 @@ const testimonials = [
   },
 ];
 
-function StarRating({ count }: { count: number }) {
+function AnimatedStarRating({ count, delay = 0 }: { count: number; delay?: number }) {
   return (
     <div className="flex gap-1 mb-3">
       {Array.from({ length: count }).map((_, i) => (
-        <span
+        <motion.span
           key={i}
           className="w-5 h-5 inline-block"
           style={{
             clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
             background: 'linear-gradient(135deg, #eab308, #f97316)',
           }}
+          initial={{ scale: 0, rotate: -180 }}
+          whileInView={{ scale: 1, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            type: 'spring',
+            stiffness: 300,
+            delay: delay + i * 0.08,
+          }}
+          whileHover={{ scale: 1.3, rotate: 20 }}
         />
       ))}
     </div>
@@ -61,56 +77,92 @@ export default function TestimonialsPage() {
   return (
     <>
       <section className="max-w-6xl mx-auto px-4 pt-20 pb-8 text-center">
-        <h1 className="text-5xl font-black text-gray-900 mb-4">Loved by Irish Music Fans</h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          See what our users have to say about TicketWatch.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h1 className="text-5xl font-black text-gray-900 mb-4">
+            <TextReveal text="Loved by Irish Music Fans" as="span" />
+          </h1>
+          <motion.p
+            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            See what our users have to say about TicketWatch.
+          </motion.p>
+        </motion.div>
       </section>
 
       <section className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
           {testimonials.map((t, i) => (
-            <GlassCard key={i} className="p-6" variant="strong">
-              <StarRating count={t.rating} />
-              <p className="text-gray-700 mb-4">"{t.quote}"</p>
-              <p className="font-bold text-gray-900">
-                {t.name}, <span className="font-normal text-gray-500">{t.location}</span>
-              </p>
-            </GlassCard>
+            <StaggerItem key={i}>
+              <GlassCard className="p-6" variant="strong">
+                <AnimatedStarRating count={t.rating} delay={i * 0.1} />
+                <motion.p
+                  className="text-gray-700 mb-4"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  &ldquo;{t.quote}&rdquo;
+                </motion.p>
+                <p className="font-bold text-gray-900">
+                  {t.name}, <span className="font-normal text-gray-500">{t.location}</span>
+                </p>
+              </GlassCard>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerChildren>
       </section>
 
       {/* Stats */}
       <section className="max-w-4xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <GlassCard className="p-8 text-center" variant="strong">
-            <div className="text-4xl font-black text-green-600 mb-2">500+</div>
-            <div className="text-gray-600">Active Watches</div>
-          </GlassCard>
-          <GlassCard className="p-8 text-center" variant="strong">
-            <div className="text-4xl font-black text-orange-500 mb-2">5K+</div>
-            <div className="text-gray-600">Events Tracked</div>
-          </GlassCard>
-          <GlassCard className="p-8 text-center" variant="strong">
-            <div className="text-4xl font-black text-yellow-500 mb-2">98%</div>
-            <div className="text-gray-600">Satisfaction Rate</div>
-          </GlassCard>
-        </div>
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-6" staggerDelay={0.15}>
+          <StaggerItem>
+            <GlassCard className="p-8 text-center" variant="strong">
+              <div className="text-4xl font-black text-green-600 mb-2">
+                <CountUp target={500} suffix="+" />
+              </div>
+              <div className="text-gray-600">Active Watches</div>
+            </GlassCard>
+          </StaggerItem>
+          <StaggerItem>
+            <GlassCard className="p-8 text-center" variant="strong">
+              <div className="text-4xl font-black text-orange-500 mb-2">
+                <CountUp target={5} suffix="K+" />
+              </div>
+              <div className="text-gray-600">Events Tracked</div>
+            </GlassCard>
+          </StaggerItem>
+          <StaggerItem>
+            <GlassCard className="p-8 text-center" variant="strong">
+              <div className="text-4xl font-black text-yellow-500 mb-2">
+                <CountUp target={98} suffix="%" />
+              </div>
+              <div className="text-gray-600">Satisfaction Rate</div>
+            </GlassCard>
+          </StaggerItem>
+        </StaggerChildren>
       </section>
 
       {/* CTA */}
       <section className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <GlassCard className="p-12" variant="strong">
-          <h2 className="text-3xl font-black text-gray-900 mb-4">Join the Community</h2>
-          <p className="text-gray-600 mb-8">Hundreds of Irish music fans already trust TicketWatch.</p>
-          <a
-            href={WHATSAPP_LINKS.default}
-            className="inline-block bg-gradient-to-r from-green-500 to-orange-500 hover:from-green-600 hover:to-orange-600 text-white font-bold py-4 px-10 rounded-full text-lg transition shadow-lg"
-          >
-            Start Watching Now
-          </a>
-        </GlassCard>
+        <ScrollReveal scale={0.95}>
+          <GlassCard className="p-12" variant="strong" glow>
+            <h2 className="text-3xl font-black text-gray-900 mb-4">
+              <TextReveal text="Join the Community" as="span" />
+            </h2>
+            <p className="text-gray-600 mb-8">Hundreds of Irish music fans already trust TicketWatch.</p>
+            <MagneticButton as="a" href={WHATSAPP_LINKS.default} className="inline-block btn-glow bg-gradient-to-r from-green-500 to-orange-500 hover:from-green-600 hover:to-orange-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg">
+              Start Watching Now
+            </MagneticButton>
+          </GlassCard>
+        </ScrollReveal>
       </section>
     </>
   );
