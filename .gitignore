@@ -13,7 +13,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -41,3 +40,5 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+.vercel
+node_modules

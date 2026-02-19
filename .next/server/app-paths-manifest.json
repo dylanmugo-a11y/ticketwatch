@@ -1,0 +1,8 @@
+{
+  "/page": "app/page.js",
+  "/how-it-works/page": "app/how-it-works/page.js",
+  "/api/webhook/twilio/route": "app/api/webhook/twilio/route.js",
+  "/testimonials/page": "app/testimonials/page.js",
+  "/about/page": "app/about/page.js",
+  "/pricing/page": "app/pricing/page.js"
+}
