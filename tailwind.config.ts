@@ -7,13 +7,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        dark: '#000',
-        purple: {
-          50: '#faf5ff',
-          900: '#1a0033',
-        },
-      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },

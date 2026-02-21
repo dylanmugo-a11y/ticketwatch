@@ -53,3 +53,17 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
+
+/* Pulsing glow effect for CTA buttons */
+@keyframes ctaGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.4), 0 0 40px rgba(236, 72, 153, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), 0 0 60px rgba(236, 72, 153, 0.4);
+  }
+}
+
+.cta-glow {
+  animation: ctaGlow 2s ease-in-out infinite;
+}
